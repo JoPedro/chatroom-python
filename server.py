@@ -11,6 +11,9 @@ server.listen()
 clientes = []
 apelidos = []
 
+# TCP apenas para conectar clientes de início
+# UDP para dar broadcast
+
 def broadcast(message):
     for cliente in clientes:
         cliente.send(message)
