@@ -8,11 +8,20 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
 server.listen()
 
+serverUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+serverUDP.bind((host, 55556))
+
 clientes = []
 apelidos = []
 
-# TCP apenas para conectar clientes de início
-# UDP para dar broadcast
+# Log de todas as mensagens enviadas visível apenas para o servidor
+def chatlogUDP():
+    while True:
+        data,addr = serverUDP.recvfrom(1024)
+        print(data.decode('utf-8'))
+
+receive_thread = threading.Thread(target=chatlogUDP)
+receive_thread.start()
 
 def broadcast(message):
     for cliente in clientes:
